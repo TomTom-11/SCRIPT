@@ -60,8 +60,17 @@
     <!-- Bouton vers la page des scripts -->
     <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
 
-    <!-- Bouton vers le site externe Delta iOS -->
-    <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
+    <!-- Bouton GET EXECUTOR modifié -->
+    <a class="btn" href="#" onclick="playMusicAndOpen()" >⚙️ GET EXECUTOR</a>
+
+    <script>
+      function playMusicAndOpen() {
+        var audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); 
+        // Remplace ce lien par ton mp3 Dia Delicia dès que tu l'as
+        audio.play();
+        window.open('https://deltaios-executor.com', '_blank');
+      }
+    </script>
 
   </body>
 </html>
