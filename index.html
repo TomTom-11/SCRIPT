@@ -4,20 +4,45 @@
     <meta charset="UTF-8" />
     <title>FREE SCRIPT</title>
     <style>
-      body {
-        background-color: #111;
+      /* Fond Matrix style */
+      body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+        background: black;
+        font-family: monospace, monospace;
         color: white;
-        font-family: Arial, sans-serif;
+      }
+
+      #matrix-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background: black;
+      }
+
+      /* Contenu par-dessus */
+      .content {
+        position: relative;
+        z-index: 1;
         text-align: center;
         padding: 80px;
         font-size: 72px;
+        color: #00ff00; /* vert vif */
+        text-shadow: 0 0 10px #00ff00;
+        font-family: 'Courier New', Courier, monospace;
       }
 
       .pub {
-        background-color: #222;
+        background-color: rgba(0, 0, 0, 0.7);
         padding: 100px;
         border-radius: 30px;
         margin-bottom: 100px;
+        box-shadow: 0 0 20px #00ff00;
       }
 
       .pub h2 {
@@ -31,8 +56,8 @@
       }
 
       .btn {
-        background-color: #7289da;
-        color: white;
+        background-color: #00cc00;
+        color: black;
         padding: 80px 100px;
         border: none;
         border-radius: 20px;
@@ -42,10 +67,14 @@
         display: inline-block;
         margin: 50px 40px;
         transition: background-color 0.3s ease;
+        font-weight: bold;
+        box-shadow: 0 0 15px #00ff00;
       }
 
       .btn:hover {
-        background-color: #5b6eae;
+        background-color: #009900;
+        color: white;
+        box-shadow: 0 0 25px #00ff00;
       }
 
       #play-music-btn {
@@ -54,52 +83,94 @@
         padding: 30px 60px;
         font-size: 48px;
         border-radius: 20px;
-        background-color: #7289da;
-        color: white;
+        background-color: #00cc00;
+        color: black;
         cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 0 15px #00ff00;
       }
       #play-music-btn:hover {
-        background-color: #5b6eae;
+        background-color: #009900;
+        color: white;
+        box-shadow: 0 0 25px #00ff00;
       }
     </style>
   </head>
   <body>
+    <canvas id="matrix-canvas"></canvas>
 
-    <div class="pub">
-      <h2>🔥 REJOINS MON SERVEUR DISCORD 🔥</h2>
-      <p>Tu veux plus de scripts, d'exclus, d'aide ? Clique ici 👇</p>
-      <a class="btn" href="https://discord.gg/T8yqN2AU" target="_blank">👉 Rejoindre le serveur</a>
+    <div class="content">
+      <div class="pub">
+        <h2>🔥 REJOINS MON SERVEUR DISCORD 🔥</h2>
+        <p>Tu veux plus de scripts, d'exclus, d'aide ? Clique ici 👇</p>
+        <a class="btn" href="https://discord.gg/T8yqN2AU" target="_blank">👉 Rejoindre le serveur</a>
+      </div>
+
+      <!-- Boutons -->
+      <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
+      <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
+
+      <!-- Audio caché -->
+      <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+      <!-- Bouton pour lancer la musique si autoplay bloqué -->
+      <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
     </div>
 
-    <!-- Boutons -->
-    <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
-    <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
-
-    <!-- Audio caché -->
-    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
-
-    <!-- Bouton pour lancer la musique si autoplay bloqué -->
-    <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
-
     <script>
+      // Matrix effect code
+      const canvas = document.getElementById('matrix-canvas');
+      const ctx = canvas.getContext('2d');
+
+      let width = canvas.width = window.innerWidth;
+      let height = canvas.height = window.innerHeight;
+
+      const letters = '0123456789ABCDEF'; // Chiffres hexadécimaux
+      const fontSize = 18;
+      const columns = Math.floor(width / fontSize);
+      const drops = [];
+
+      for(let x = 0; x < columns; x++) drops[x] = Math.random() * height;
+
+      function draw() {
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#00ff00';
+        ctx.font = fontSize + 'px monospace';
+
+        for(let i = 0; i < drops.length; i++) {
+          const text = letters.charAt(Math.floor(Math.random() * letters.length));
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if(drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
+
+          drops[i]++;
+        }
+      }
+
+      setInterval(draw, 50);
+
+      window.addEventListener('resize', () => {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
+      });
+
+      // Musique
       const music = document.getElementById('bg-music');
       const playBtn = document.getElementById('play-music-btn');
 
-      // Essaie de jouer la musique au chargement
       window.onload = () => {
-        music.volume = 0.5; // volume moyen
+        music.volume = 0.5;
         music.play().catch(() => {
-          // Si autoplay bloqué, on montre le bouton
           playBtn.style.display = 'inline-block';
         });
       };
 
-      // Fonction pour lancer la musique manuellement
       function playMusic() {
         music.play();
-        playBtn.style.display = 'none'; // cache le bouton après lancement
+        playBtn.style.display = 'none';
       }
     </script>
-
   </body>
 </html>
