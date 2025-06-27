@@ -57,7 +57,27 @@
       <a class="btn" href="https://discord.gg/T8yqN2AU" target="_blank">👉 Rejoindre le serveur</a>
     </div>
 
-    <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
+    <!-- BOUTON QUI CHANGE DE TEXTE AU CLIC -->
+    <a id="toggle-btn" class="btn" href="https://deltaios-executor.com" target="_blank">📜 GET SCRIPT</a>
+
+    <script>
+      const btn = document.getElementById("toggle-btn");
+      let isScript = true;
+
+      btn.addEventListener("click", (e) => {
+        // Change uniquement le texte, pas le lien (car lien est le même)
+        e.preventDefault(); // Empêche d'ouvrir le lien immédiatement
+        if (isScript) {
+          btn.textContent = "⚙️ GET EXECUTOR";
+        } else {
+          btn.textContent = "📜 GET SCRIPT";
+        }
+        isScript = !isScript;
+        setTimeout(() => {
+          window.open(btn.href, "_blank");
+        }, 150);
+      });
+    </script>
 
   </body>
 </html>
