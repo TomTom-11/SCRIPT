@@ -47,6 +47,20 @@
       .btn:hover {
         background-color: #5b6eae;
       }
+
+      #play-music-btn {
+        display: none;
+        margin-top: 40px;
+        padding: 30px 60px;
+        font-size: 48px;
+        border-radius: 20px;
+        background-color: #7289da;
+        color: white;
+        cursor: pointer;
+      }
+      #play-music-btn:hover {
+        background-color: #5b6eae;
+      }
     </style>
   </head>
   <body>
@@ -57,18 +71,33 @@
       <a class="btn" href="https://discord.gg/T8yqN2AU" target="_blank">👉 Rejoindre le serveur</a>
     </div>
 
-    <!-- Bouton vers la page des scripts -->
+    <!-- Boutons -->
     <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
+    <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
 
-    <!-- Bouton GET EXECUTOR modifié -->
-    <a class="btn" href="#" onclick="playMusicAndOpen()" >⚙️ GET EXECUTOR</a>
+    <!-- Audio caché -->
+    <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
+
+    <!-- Bouton pour lancer la musique si autoplay bloqué -->
+    <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
 
     <script>
-      function playMusicAndOpen() {
-        var audio = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'); 
-        // Remplace ce lien par ton mp3 Dia Delicia dès que tu l'as
-        audio.play();
-        window.open('https://deltaios-executor.com', '_blank');
+      const music = document.getElementById('bg-music');
+      const playBtn = document.getElementById('play-music-btn');
+
+      // Essaie de jouer la musique au chargement
+      window.onload = () => {
+        music.volume = 0.5; // volume moyen
+        music.play().catch(() => {
+          // Si autoplay bloqué, on montre le bouton
+          playBtn.style.display = 'inline-block';
+        });
+      };
+
+      // Fonction pour lancer la musique manuellement
+      function playMusic() {
+        music.play();
+        playBtn.style.display = 'none'; // cache le bouton après lancement
       }
     </script>
 
