@@ -93,10 +93,30 @@
         color: white;
         box-shadow: 0 0 25px #00ff00;
       }
+
+      /* Texte arc-en-ciel animé */
+      .rainbow-text {
+        margin-top: 40px;
+        font-size: 40px;
+        font-weight: bold;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+        background-size: 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: rainbowMove 5s linear infinite;
+        text-align: center;
+        text-shadow: 0 0 10px black;
+      }
+
+      @keyframes rainbowMove {
+        0% { background-position: 0%; }
+        100% { background-position: 400%; }
+      }
     </style>
   </head>
   <body>
-    <!-- Canvas pour le fond Matrix -->
+    <!-- Canvas Matrix -->
     <canvas id="matrix-canvas"></canvas>
 
     <!-- Contenu principal -->
@@ -110,11 +130,17 @@
       <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
       <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
 
+      <!-- Texte rainbow -->
+      <div class="rainbow-text">
+        FREE EXECUTOR DELTA AND FREE SCRIPT FOR ALL GAME
+      </div>
+
+      <!-- Audio -->
       <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
       <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
     </div>
 
-    <!-- Script JavaScript -->
+    <!-- Script -->
     <script>
       const canvas = document.getElementById('matrix-canvas');
       const ctx = canvas.getContext('2d');
@@ -123,7 +149,7 @@
       let height = canvas.height = window.innerHeight;
 
       const letters = '01';
-      let fontSize = Math.floor(width / 18); // Taille automatique pour 18 colonnes
+      let fontSize = Math.floor(width / 18);
       let columns = Math.floor(width / fontSize);
       let drops = Array(columns).fill(0);
 
@@ -147,7 +173,6 @@
 
       setInterval(drawMatrix, 100);
 
-      // Redimensionnement dynamique
       window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
@@ -156,7 +181,6 @@
         drops = Array(columns).fill(0);
       });
 
-      // Musique
       const music = document.getElementById('bg-music');
       const playBtn = document.getElementById('play-music-btn');
 
