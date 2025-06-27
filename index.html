@@ -116,7 +116,6 @@
 
     <!-- Script JavaScript -->
     <script>
-      // MATRIX BACKGROUND
       const canvas = document.getElementById('matrix-canvas');
       const ctx = canvas.getContext('2d');
 
@@ -124,32 +123,40 @@
       let height = canvas.height = window.innerHeight;
 
       const letters = '01';
-      const fontSize = 600; // ← taille x50
-      const columns = Math.floor(width / fontSize);
-      const drops = Array(columns).fill(0);
+      let fontSize = Math.floor(width / 18); // Taille automatique pour 18 colonnes
+      let columns = Math.floor(width / fontSize);
+      let drops = Array(columns).fill(0);
 
-      function draw() {
+      function drawMatrix() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
         ctx.fillRect(0, 0, width, height);
 
         ctx.fillStyle = '#00ff00';
         ctx.font = fontSize + 'px monospace';
 
-        drops.forEach((y, i) => {
+        for (let i = 0; i < drops.length; i++) {
           const text = letters.charAt(Math.floor(Math.random() * letters.length));
-          ctx.fillText(text, i * fontSize, y * fontSize);
-          drops[i] = y * fontSize > height && Math.random() > 0.975 ? 0 : y + 1;
-        });
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+          if (drops[i] * fontSize > height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          drops[i]++;
+        }
       }
 
-      setInterval(draw, 100);
+      setInterval(drawMatrix, 100);
 
+      // Redimensionnement dynamique
       window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
+        fontSize = Math.floor(width / 18);
+        columns = Math.floor(width / fontSize);
+        drops = Array(columns).fill(0);
       });
 
-      // AUDIO
+      // Musique
       const music = document.getElementById('bg-music');
       const playBtn = document.getElementById('play-music-btn');
 
