@@ -4,14 +4,13 @@
     <meta charset="UTF-8" />
     <title>FREE SCRIPT</title>
     <style>
-      /* Fond Matrix */
       html, body {
         margin: 0;
         padding: 0;
         height: 100%;
         overflow: hidden;
         background: black;
-        font-family: monospace, monospace;
+        font-family: monospace;
         color: white;
       }
 
@@ -25,7 +24,6 @@
         background: black;
       }
 
-      /* Contenu visible */
       .content {
         position: relative;
         z-index: 1;
@@ -98,8 +96,10 @@
     </style>
   </head>
   <body>
+    <!-- Canvas pour le fond Matrix -->
     <canvas id="matrix-canvas"></canvas>
 
+    <!-- Contenu principal -->
     <div class="content">
       <div class="pub">
         <h2>🔥 REJOINS MON SERVEUR DISCORD 🔥</h2>
@@ -114,16 +114,17 @@
       <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
     </div>
 
+    <!-- Script JavaScript -->
     <script>
-      // Matrix
+      // MATRIX BACKGROUND
       const canvas = document.getElementById('matrix-canvas');
       const ctx = canvas.getContext('2d');
 
       let width = canvas.width = window.innerWidth;
       let height = canvas.height = window.innerHeight;
 
-      const letters = '0123456789ABCDEF';
-      const fontSize = 26; // ← ICI on a agrandi la taille
+      const letters = '01';
+      const fontSize = 600; // ← taille x50
       const columns = Math.floor(width / fontSize);
       const drops = Array(columns).fill(0);
 
@@ -141,14 +142,14 @@
         });
       }
 
-      setInterval(draw, 50);
+      setInterval(draw, 100);
 
       window.addEventListener('resize', () => {
         width = canvas.width = window.innerWidth;
         height = canvas.height = window.innerHeight;
       });
 
-      // Musique
+      // AUDIO
       const music = document.getElementById('bg-music');
       const playBtn = document.getElementById('play-music-btn');
 
