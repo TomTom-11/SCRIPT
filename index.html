@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <title>FREE SCRIPT</title>
     <style>
-      /* Fond Matrix style */
-      body, html {
+      /* Fond Matrix */
+      html, body {
         margin: 0;
         padding: 0;
         height: 100%;
@@ -25,47 +25,47 @@
         background: black;
       }
 
-      /* Contenu par-dessus */
+      /* Contenu visible */
       .content {
         position: relative;
         z-index: 1;
         text-align: center;
-        padding: 80px;
-        font-size: 72px;
-        color: #00ff00; /* vert vif */
+        padding: 40px;
+        font-size: 36px;
+        color: #00ff00;
         text-shadow: 0 0 10px #00ff00;
         font-family: 'Courier New', Courier, monospace;
       }
 
       .pub {
         background-color: rgba(0, 0, 0, 0.7);
-        padding: 100px;
+        padding: 60px;
         border-radius: 30px;
-        margin-bottom: 100px;
+        margin-bottom: 60px;
         box-shadow: 0 0 20px #00ff00;
       }
 
       .pub h2 {
-        font-size: 140px;
-        margin-bottom: 50px;
+        font-size: 60px;
+        margin-bottom: 30px;
       }
 
       .pub p {
-        font-size: 96px;
-        margin-bottom: 60px;
+        font-size: 36px;
+        margin-bottom: 40px;
       }
 
       .btn {
         background-color: #00cc00;
         color: black;
-        padding: 80px 100px;
+        padding: 30px 50px;
         border: none;
         border-radius: 20px;
-        font-size: 96px;
+        font-size: 36px;
         text-decoration: none;
         cursor: pointer;
         display: inline-block;
-        margin: 50px 40px;
+        margin: 20px 20px;
         transition: background-color 0.3s ease;
         font-weight: bold;
         box-shadow: 0 0 15px #00ff00;
@@ -79,9 +79,9 @@
 
       #play-music-btn {
         display: none;
-        margin-top: 40px;
-        padding: 30px 60px;
-        font-size: 48px;
+        margin-top: 30px;
+        padding: 20px 40px;
+        font-size: 28px;
         border-radius: 20px;
         background-color: #00cc00;
         color: black;
@@ -89,6 +89,7 @@
         font-weight: bold;
         box-shadow: 0 0 15px #00ff00;
       }
+
       #play-music-btn:hover {
         background-color: #009900;
         color: white;
@@ -106,31 +107,25 @@
         <a class="btn" href="https://discord.gg/T8yqN2AU" target="_blank">👉 Rejoindre le serveur</a>
       </div>
 
-      <!-- Boutons -->
       <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
       <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
 
-      <!-- Audio caché -->
       <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
-
-      <!-- Bouton pour lancer la musique si autoplay bloqué -->
       <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
     </div>
 
     <script>
-      // Matrix effect code
+      // Matrix
       const canvas = document.getElementById('matrix-canvas');
       const ctx = canvas.getContext('2d');
 
       let width = canvas.width = window.innerWidth;
       let height = canvas.height = window.innerHeight;
 
-      const letters = '0123456789ABCDEF'; // Chiffres hexadécimaux
-      const fontSize = 18;
+      const letters = '0123456789ABCDEF';
+      const fontSize = 12;
       const columns = Math.floor(width / fontSize);
-      const drops = [];
-
-      for(let x = 0; x < columns; x++) drops[x] = Math.random() * height;
+      const drops = Array(columns).fill(0);
 
       function draw() {
         ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
@@ -139,14 +134,11 @@
         ctx.fillStyle = '#00ff00';
         ctx.font = fontSize + 'px monospace';
 
-        for(let i = 0; i < drops.length; i++) {
+        drops.forEach((y, i) => {
           const text = letters.charAt(Math.floor(Math.random() * letters.length));
-          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-          if(drops[i] * fontSize > height && Math.random() > 0.975) drops[i] = 0;
-
-          drops[i]++;
-        }
+          ctx.fillText(text, i * fontSize, y * fontSize);
+          drops[i] = y * fontSize > height && Math.random() > 0.975 ? 0 : y + 1;
+        });
       }
 
       setInterval(draw, 50);
