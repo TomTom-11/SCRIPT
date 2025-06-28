@@ -94,7 +94,6 @@
         box-shadow: 0 0 25px #00ff00;
       }
 
-      /* Texte arc-en-ciel animé, maintenant 2x plus gros */
       .rainbow-text {
         margin-top: 40px;
         font-size: 80px;
@@ -113,13 +112,39 @@
         0% { background-position: 0%; }
         100% { background-position: 400%; }
       }
+
+      /* Texte à effet paillettes vertes */
+      .glitter-text {
+        margin-top: 50px;
+        font-size: 48px;
+        font-weight: bold;
+        color: #00ff00;
+        text-shadow: 0 0 5px #00ff00, 0 0 10px #00ff00, 0 0 20px #00ff00;
+        animation: glitter 1.2s infinite alternate;
+        text-transform: uppercase;
+      }
+
+      @keyframes glitter {
+        0% {
+          text-shadow:
+            0 0 5px #00ff00,
+            0 0 10px #00ff00,
+            0 0 20px #00ff00,
+            0 0 40px #00ff88;
+        }
+        100% {
+          text-shadow:
+            0 0 10px #00ff88,
+            0 0 20px #00ff88,
+            0 0 30px #00ff88,
+            0 0 60px #00ff00;
+        }
+      }
     </style>
   </head>
   <body>
-    <!-- Canvas Matrix -->
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- Contenu principal -->
     <div class="content">
       <div class="pub">
         <h2>🔥 REJOINS MON SERVEUR DISCORD 🔥</h2>
@@ -130,17 +155,19 @@
       <a class="btn" href="script.html" target="_blank">📜 GET SCRIPT</a>
       <a class="btn" href="https://deltaios-executor.com" target="_blank">⚙️ GET EXECUTOR</a>
 
-      <!-- Texte rainbow -->
       <div class="rainbow-text">
         FREE EXECUTOR DELTA AND FREE SCRIPT FOR ALL GAME
       </div>
 
-      <!-- Audio -->
       <audio id="bg-music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" loop></audio>
       <button id="play-music-btn" onclick="playMusic()">▶️ Lancer la musique</button>
+
+      <!-- Ton nouveau texte en vert avec effet paillettes -->
+      <div class="glitter-text">
+        BEST HACKER TOP 3: TUBERS93 / 1X1X1X1 / C00LKID
+      </div>
     </div>
 
-    <!-- Script -->
     <script>
       const canvas = document.getElementById('matrix-canvas');
       const ctx = canvas.getContext('2d');
